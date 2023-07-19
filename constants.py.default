@@ -1,3 +1,5 @@
 # Replace with your own OpenAI API Key https://platform.openai.com/account/api-keys
 # and rename this file to constants.py.
 APIKEY = "<your OpenAI API key>"
+PINECONE_API_KEY = "<your PINECONE API key>"
+PINECONE_ENVIRONMENT = "<your PINECONE ENV>"
