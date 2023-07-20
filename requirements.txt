@@ -4,8 +4,10 @@ tiktoken>=0.3.3,<0.4
 urllib3<2
 BingImageCreator==0.4.4
 langchain==0.0.235
-# chromadb==0.3.29
+chromadb==0.3.29
 pydantic==1.10.11
-# unstructured==0.8.1
-gpt-index==0.7.10.post1
+unstructured==0.8.1
+llama-index==0.7.11
 pypdf==3.12.2
+gradio
+pinecone-client

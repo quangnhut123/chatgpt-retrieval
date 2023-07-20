@@ -21,8 +21,7 @@ os.environ["OPENAI_API_KEY"] = constants.OPENAI_API_KEY
 
 # Pinecone configuration
 pinecone.init(
-    api_key=constants.PINECONE_API_KEY,
-    environment=constants.PINECONE_ENVIRONMENT
+    api_key=constants.PINECONE_API_KEY, environment=constants.PINECONE_ENVIRONMENT
 )
 
 index_name = "gpt-info"
@@ -39,16 +38,13 @@ if len(sys.argv) > 1:
 # text_splitter = RecursiveCharacterTextSplitter(chunk_size = 500, chunk_overlap = 0)
 # docs = text_splitter.split_documents(data)
 
-interface = Pinecone.from_existing_index(
-    index_name,
-    embedding=OpenAIEmbeddings()
-)
+interface = Pinecone.from_existing_index(index_name, embedding=OpenAIEmbeddings())
 
 # interface = Pinecone.from_documents(docs, embedding=OpenAIEmbeddings(), index_name=index_name)
 
 qa_chain = RetrievalQAWithSourcesChain.from_llm(
     llm=ChatOpenAI(model="gpt-3.5-turbo", temperature=0.2, streaming=True),
-    retriever=interface.as_retriever(search_kwargs={"k": 1})
+    retriever=interface.as_retriever(search_kwargs={"k": 1}),
 )
 
 chat_history = []
