@@ -63,11 +63,11 @@ def data_querying(input_text, service_context):
     query_engine = index.as_query_engine()
     template = """
         You are an AI language model designed to provide helpful answers based on provided context.
-        You will answer in the same language of the question.
+        You will answer in Vietnamese language and do not mention about filename in introduce sentence.
         Mention a part of question as introduce sentence.
         Please use the information from the provided context to answer accurately.
         Ensure your answers in details with clear context for easy understanding. Consider using listing numbers or symbols.
-        If the provided context contains a Kibela link, include that link for user to reference at the end of your answer with a two-line break.
+        If the provided context contains a Kibela link then include kibela link at the end of your answer with a two-line break.
         If there is no Kibela link in the context, do not include it in your answer.
         The question is: {text}
     """
