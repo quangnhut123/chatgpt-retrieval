@@ -17,7 +17,7 @@ import openai
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY", constants.API_KEY)
 openai.api_key = os.environ["OPENAI_API_KEY"]
 persist_dir = os.getenv("PERSIST_DIR", "index_db")
-model_name = os.getenv("MODEL_NAME", "gpt-4")
+model_name = os.getenv("MODEL_NAME", "gpt-3.5-turbo")
 max_input_size = int(os.getenv("MAX_INPUT_SIZE", 4096))
 num_outputs = int(os.getenv("NUM_OUTPUTS", 1024))
 max_chunk_overlap = float(os.getenv("MAX_CHUNK_OVERLAP", 0.2))
