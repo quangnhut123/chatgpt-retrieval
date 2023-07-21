@@ -17,7 +17,7 @@ import openai
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY", constants.API_KEY)
 openai.api_key = os.environ["OPENAI_API_KEY"]
 persist_dir = os.getenv("PERSIST_DIR", "index_db")
-model_name = os.getenv("MODEL_NAME", "gpt-3.5-turbo-16k")
+model_name = os.getenv("MODEL_NAME", "gpt-4")
 max_input_size = int(os.getenv("MAX_INPUT_SIZE", 4096))
 num_outputs = int(os.getenv("NUM_OUTPUTS", 1024))
 max_chunk_overlap = float(os.getenv("MAX_CHUNK_OVERLAP", 0.2))
@@ -63,13 +63,16 @@ def data_querying(input_text, service_context):
     query_engine = index.as_query_engine()
     template = """
         You are an AI language model designed to provide helpful answers based on provided context.
-        You will answer questions in the same language as the question.
+        You will answer in the same language of the question.
+        Mention a part of question as introduce sentence.
         Please use the information from the provided context to answer accurately.
-        Ensure your answers include clear context and details for easy understanding. Consider using listing numbers or symbols.
-        If the provided context contains a Kibela link, include it at the end of your answer with a two-line break in the following format: "***Please read more: kibela_link_extracted" and translate this sentence into the language of the given question.
+        Ensure your answers in details with clear context for easy understanding. Consider using listing numbers or symbols.
+        I have this sentence in the following format : "***Please read more: kibela_link". I need you do as below :
+        If the provided context contains a Kibela link, extract this link and replace "kibela_link" from above sentence with the extracted link then translate to same languge of question and include sentence at the end of your answer with a two-line break.
         If there is no Kibela link in the context, do not include it in your answer.
         The question is: {text}
-        """
+    """
+
     mod_question = template.format(text=input_text)
     response = query_engine.query(mod_question)
 
