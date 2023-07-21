@@ -67,8 +67,7 @@ def data_querying(input_text, service_context):
         Mention a part of question as introduce sentence.
         Please use the information from the provided context to answer accurately.
         Ensure your answers in details with clear context for easy understanding. Consider using listing numbers or symbols.
-        I have this sentence in the following format : "***Please read more: kibela_link". I need you do as below :
-        If the provided context contains a Kibela link, extract this link and replace "kibela_link" from above sentence with the extracted link then translate to same languge of question and include sentence at the end of your answer with a two-line break.
+        If the provided context contains a Kibela link, include that link for user to reference at the end of your answer with a two-line break.
         If there is no Kibela link in the context, do not include it in your answer.
         The question is: {text}
     """
