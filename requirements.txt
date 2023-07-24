@@ -3,11 +3,12 @@ openai>=0.27.6,<0.28
 tiktoken>=0.3.3,<0.4
 urllib3<2
 BingImageCreator==0.4.4
-langchain==0.0.235
+langchain==0.0.240
 chromadb==0.3.29
 pydantic==1.10.11
 unstructured==0.8.1
-llama-index==0.7.11
-pypdf==3.12.2
+llama-index==0.7.11.post1
+llama-hub==0.0.14
+pypdf==3.13.0
 gradio
 pinecone-client
