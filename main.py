@@ -10,6 +10,7 @@ from llama_index import (
     set_global_service_context,
     download_loader,
 )
+
 # from llama_hub.file.unstructured.base import UnstructuredReader
 from langchain.chat_models import ChatOpenAI
 from langchain.embeddings import OpenAIEmbeddings
@@ -27,7 +28,7 @@ text_embeddings_model_name = os.getenv(
     "TEXT_EMBEDDINGS_MODEL_NAME", "text-embedding-ada-002"
 )
 model_name = os.getenv("MODEL_NAME", "gpt-3.5-turbo")
-max_input_size = int(os.getenv("MAX_INPUT_SIZE", 4096))
+max_input_size = int(os.getenv("MAX_INPUT_SIZE", 2048))
 num_outputs = int(os.getenv("NUM_OUTPUTS", 1024))
 max_chunk_overlap = float(os.getenv("MAX_CHUNK_OVERLAP", 0.3))
 chunk_size_limit = int(os.getenv("CHUNK_SIZE_LIMIT", 600))
@@ -62,16 +63,15 @@ def init_service_context():
 
 
 def load_index(directory_path):
-    UnstructuredReader = download_loader('UnstructuredReader')
+    UnstructuredReader = download_loader("UnstructuredReader")
     documents = SimpleDirectoryReader(
         directory_path,
         file_extractor={
             ".pdf": UnstructuredReader(),
             ".docx": UnstructuredReader(),
-            ".txt": UnstructuredReader(),
         },
-        filename_as_id=True,
-        encoding="utf-8"
+        filename_as_id=False,
+        encoding="utf-8",
     ).load_data()
     print(f"Loaded documents with {len(documents)} pages")
 
@@ -105,9 +105,13 @@ def load_index(directory_path):
 def data_querying(input_text, history_text):
     index = load_index("data")
     query_engine = index.as_query_engine()
-    template = """Câu hỏi cho bạn là: {text}
-Bạn sẽ luôn trả lời bằng tiếng Việt và không đề cập đến tên tệp trong câu giới thiệu.
-Vui lòng sử dụng thông tin từ ngữ cảnh được cung cấp để trả lời chi tiết và chính xác, dễ hiểu. Cân nhắc sử dụng các số hoặc ký hiệu liệt kê."""
+    template = """
+        You are an AI language model designed to provide helpful answers based on provided context.
+        You will answer in Vietnamese language and do not mention about filename in introduce sentence.
+        Please use the information from the provided context to answer accurately.
+        Ensure your answers in details with clear context for easy understanding. Consider using listing numbers or symbols.
+        The question is: {text}
+    """
 
     mod_question = template.format(text=input_text)
     response = query_engine.query(mod_question)
